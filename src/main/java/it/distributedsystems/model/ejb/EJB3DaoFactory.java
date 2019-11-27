@@ -23,11 +23,15 @@ public class EJB3DaoFactory extends DAOFactory {
 
     private static Hashtable getInitialContextProperties() {
         Hashtable props = new Hashtable();
+        //originale -------------1
         //props.put("java.naming.factory.initial", "org.jnp.interfaces.NamingContextFactory");
         //props.put("java.naming.factory.url.pkgs", "org.jboss.naming:org.jnp.interfaces");
        // props.put("java.naming.provider.url", "127.0.0.1:1099"); //(new ServerInfo()).getHostAddress()  --- 127.0.0.1 --
-        props.put(Context.INITIAL_CONTEXT_FACTORY,  "org.wildfly.naming.client.WildFlyInitialContextFactory");
-        props.put(Context.PROVIDER_URL,"http-remoting://localhost:1099");
+        //prova ----------------2
+        //props.put(Context.INITIAL_CONTEXT_FACTORY,  "org.wildfly.naming.client.WildFlyInitialContextFactory");
+        //props.put(Context.PROVIDER_URL,"http-remoting://localhost:1099");
+        //prova ---------------3
+        props.put(Context.URL_PKG_PREFIXES, "org.jboss.naming.remote.client.InitialContextFactory");
         return props;
     }
 
@@ -47,7 +51,7 @@ public class EJB3DaoFactory extends DAOFactory {
         try {
             InitialContext context = getInitialContext();
             //PurchaseDAO result = (PurchaseDAO)context.lookup("distributed-systems-demo/EJB3PurchaseDAO/local");
-            PurchaseDAO result = (PurchaseDAO)context.lookup(generatePathContext("Purchase",false));
+            PurchaseDAO result = (PurchaseDAO)context.lookup(generatePathContext("Purchase",true));
 
             return result;
         } catch (Exception var3) {
