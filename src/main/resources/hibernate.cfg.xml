@@ -12,20 +12,24 @@
        <property name="connection.username">root</property>
        <property name="connection.password">sdm</property>
     -->
-     <property name="connection.url">jdbc:mysql:/localhost:3306/shopping</property>
+     <property name="connection.url">jdbc:mysql://127.0.0.1:3306/shopping</property>
      <property name="connection.username">root</property>
      <property name="connection.password">sisdist</property>
 
 <!--    <property name="connection.driver_class">com.mysql.jdbc.Driver</property> -->
      <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
 <!--    <property name="dialect">org.hibernate.dialect.MySQL8DialectDialect</property> -->
-     <property name="dialect">org.hibernate.dialect.MySQL57Dialect</property>
-  
-    <property name="show_sql">true</property>
-    <property name="format_sql">true</property>
-    <property name="hibernate.hbm2ddl.auto">create</property>
-  
-    <!-- JDBC connection pool (use the built-in) -->
+      <property name="hibernate.dialect">org.hibernate.dialect.MySQL57Dialect</property>
+     <!--<property name="dialect">org.hibernate.dialect.MySQLMyISAMDialect</property>-->
+     <!--<property name="dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>-->
+     <!--<property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>-->
+
+
+   <property name="show_sql">true</property>
+   <property name="format_sql">true</property>
+   <property name="hibernate.hbm2ddl.auto">create</property>
+
+   <!-- JDBC connection pool (use the built-in) -->
     <property name="connection.pool_size">10</property>
     <property name="current_session_context_class">thread</property>
 

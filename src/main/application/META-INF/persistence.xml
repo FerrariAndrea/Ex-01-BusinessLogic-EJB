@@ -7,9 +7,9 @@
              version="2.0">
     <persistence-unit name="distributed-systems-demo" transaction-type="JTA">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-<!--        <jta-data-source>java:/DefaultDS</jta-data-source>-->
-<!--        <mapping-file>META-INF/orm.xml</mapping-file>-->
-<!--        <jar-file></jar-file>-->
+        <jta-data-source>java:jboss/datasources/shopping</jta-data-source>
+        <!--        <mapping-file>META-INF/orm.xml</mapping-file>-->
+        <!--        <jar-file></jar-file>-->
         <class>it.distributedsystems.model.dao.Product</class>
         <class>it.distributedsystems.model.dao.Purchase</class>
         <class>it.distributedsystems.model.dao.Producer</class>
@@ -18,13 +18,14 @@
         <validation-mode>CALLBACK</validation-mode>
         <properties>
             <!-- DB information -->
-            <property name="connection.url" value="jdbc:mysql://localhost:3306/shopping"/>
+            <property name="connection.url" value="jdbc:mysql://127.0.0.1:3306/shopping"/>
             <property name="connection.username" value="root"/>
             <property name="connection.password" value="sisdist"/>
 
             <!--    <property name="connection.driver_class" value="com.mysql.jdbc.Driver"/>-->
-            <property name="connection.driver_class" value="com.mysql.cj.jdbc.Driver"/>
             <!--    <property name="dialect" value="org.hibernate.dialect.MySQL8DialectDialect"/>-->
+
+            <property name="connection.driver_class" value="com.mysql.cj.jdbc.Driver"/>
             <property name="dialect" value="org.hibernate.dialect.MySQL57Dialect"/>
 
             <property name="show_sql" value="true"/>
