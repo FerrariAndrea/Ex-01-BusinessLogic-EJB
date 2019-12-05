@@ -78,9 +78,11 @@
 			Product product = new Product();
 			product.setName( request.getParameter("name") );
 			product.setProductNumber(Integer.parseInt(request.getParameter("number")));
-
-			Producer producer = producerDAO.findProducerById(Integer.parseInt(request.getParameter("producer")));
-			product.setProducer(producer);
+			System.out.println("\n\nMIO CODICE--->" + request.getParameter("producer")+"\n\n");
+			if(request.getParameter("producer")!=null){
+				Producer producer = producerDAO.findProducerById(Integer.parseInt(request.getParameter("producer")));
+				product.setProducer(producer);
+			}
 			int id = productDAO.insertProduct(product);
 			out.println("<!-- inserted product '" + product.getName() + "' with id = '" + id + "' -->");
 		}
