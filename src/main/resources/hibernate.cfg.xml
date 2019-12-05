@@ -5,7 +5,6 @@
 <hibernate-configuration>
 
  <session-factory>
-
      <!-- DB information -->
      <!--
        <property name="connection.url">jdbc:mysql://137.204.57.168:3306/test</property>

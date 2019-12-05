@@ -190,6 +190,7 @@ war {
     //from 'tmp/war'
     include "*.cfg.xml"
     include "*.jsp"
+    include "src/webapp/styles/*.css"
 }
 
 
@@ -212,13 +213,13 @@ task prepareEar(){
 //        }
         copy {
             from "$projectDir/settings/application.xml"
-            into "$buildDir/tmp/ear/MATA-INF/"
+            into "$buildDir/tmp/ear/META-INF/"
         }
 
         /*
         copy {
             from "$projectDir/settings/jboss-app.xml"
-            into "$buildDir/tmp/ear/MATA-INF/"
+            into "$buildDir/tmp/ear/META-INF/"
         }
         */
 
