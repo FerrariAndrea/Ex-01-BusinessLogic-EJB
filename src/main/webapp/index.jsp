@@ -1,9 +1,11 @@
 <%@ page session ="true"%>
 <%@ page import="java.util.*" %>
 <%@ page import="it.distributedsystems.model.dao.*" %>
+<%@ page import="org.hibernate.Hibernate" %>
 
 
 <%!
+
 	String printTableRow(Product product, String url) {
 		StringBuffer html = new StringBuffer();
 		html
@@ -75,16 +77,18 @@
 			out.println("<!-- inserted producer '" + producer.getName() + "', with id = '" + id + "' -->");
 		}
 		else if ( operation != null && operation.equals("insertProduct") ) {
+
 			Product product = new Product();
 			product.setName( request.getParameter("name") );
+			String name = product.getName();
 			product.setProductNumber(Integer.parseInt(request.getParameter("number")));
-			System.out.println("\n\nMIO CODICE--->" + request.getParameter("producer")+"\n\n");
 			if(request.getParameter("producer")!=null){
 				Producer producer = producerDAO.findProducerById(Integer.parseInt(request.getParameter("producer")));
 				product.setProducer(producer);
 			}
 			int id = productDAO.insertProduct(product);
-			out.println("<!-- inserted product '" + product.getName() + "' with id = '" + id + "' -->");
+			System.out.println("productDAO.insertProduct--->" + name);
+			out.println("<!-- inserted product '" +name+ "' with id = '" + id + "' -->");
 		}
 
 		//Da aggiungere la possibilità di fare un ordine in sessione e di finalizzarla per creare un purchase.

@@ -5,6 +5,7 @@ import it.distributedsystems.model.dao.Customer;
 import it.distributedsystems.model.dao.CustomerDAO;
 import it.distributedsystems.model.dao.Producer;
 import it.distributedsystems.model.dao.ProducerDAO;
+import org.hibernate.Hibernate;
 
 import javax.ejb.*;
 import javax.interceptor.Interceptors;
@@ -59,8 +60,11 @@ public class EJB3ProducerDAO implements ProducerDAO {
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public Producer findProducerByName(String name) {
         if(name != null && !name.equals("")) {
-            return (Producer) em.createQuery("FROM Producer p where p.name = :producerName").
+
+            Producer p =  (Producer) em.createQuery("FROM Producer p where p.name = :producerName").
                     setParameter("producerName", name).getSingleResult();
+            Hibernate.initialize(p.getProducts());
+            return p;
         } else
             return null;
     }
@@ -68,7 +72,10 @@ public class EJB3ProducerDAO implements ProducerDAO {
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public Producer findProducerById(int id) {
-        return em.find(Producer.class, id);
+        Producer p = em.find(Producer.class, id);
+        Hibernate.initialize(p.getProducts());
+        return p;
+
     }
 
     @Override

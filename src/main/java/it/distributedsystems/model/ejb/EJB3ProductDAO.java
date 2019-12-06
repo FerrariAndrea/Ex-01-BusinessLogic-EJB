@@ -2,6 +2,7 @@ package it.distributedsystems.model.ejb;
 
 //import it.distributedsystems.model.logging.OperationLogger;
 import it.distributedsystems.model.dao.*;
+import org.hibernate.Hibernate;
 
 import java.util.HashSet;
 import java.util.List;
@@ -31,7 +32,9 @@ public class EJB3ProductDAO implements ProductDAO {
 //    @Interceptors(OperationLogger.class)
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public int insertProduct(Product product) {
-
+        if(product.getProducer()!=null && product.getProducer().getId()>0){
+            product.setProducer(em.merge(product.getProducer()));
+        }
         em.persist(product);
         return product.getId();
     }
@@ -76,20 +79,29 @@ public class EJB3ProductDAO implements ProductDAO {
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public Product findProductByNumber(int productNumber) {
-        return (Product) em.createQuery("from Product p where p.productNumber = :num").
+        Product p =  (Product) em.createQuery("from Product p where p.productNumber = :num").
                 setParameter("num", productNumber).getSingleResult();
+        Hibernate.initialize(p.getProducer());
+        return p;
     }
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public Product findProductById(int id) {
-        return em.find(Product.class, id);
+        Product p = em.find(Product.class, id);
+        Hibernate.initialize(p.getProducer());
+        return p;
     }
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public List<Product> getAllProducts() {
-        return em.createQuery("from Product").getResultList();
+    public List<Product> getAllProducts()
+    {
+        List<Product> list=em.createQuery("from Product").getResultList();
+         for (Product p:list) {
+             Hibernate.initialize(p.getProducer());
+         }
+        return list;
     }
 
     @Override
@@ -97,16 +109,25 @@ public class EJB3ProductDAO implements ProductDAO {
     public List<Product> getAllProductsByProducer(Producer producer) {
         //Non è stato necessario usare una fetch join (nonostante Product.producer fosse mappato LAZY)
         //perché gli id delle entità LAZY collegate vengono comunque mantenuti e sono accessibili
-        return em.createQuery("FROM Product p WHERE :producerId = p.producer.id").
+        List<Product> list= em.createQuery("FROM Product p WHERE :producerId = p.producer.id").
                 setParameter("producerId", producer.getId()).getResultList();
+        for (Product p:list) {
+            Hibernate.initialize(p.getProducer());
+        }
+        return list;
     }
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public List<Product> getAllProductsByPurchase(Purchase purchase) {
+
         // riattacco il product al contesto di persistenza con una merge
-        return em.createQuery("FROM Product p WHERE :purchaseId = p.purchase.id").
+        List<Product>  list= em.createQuery("FROM Product p WHERE :purchaseId = p.purchase.id").
                 setParameter("purchaseId", purchase.getId()).getResultList();
+       // for (Product p:list) {
+       //     Hibernate.initialize(p.getProducer());
+       // }
+        return list;
     }
 }
 

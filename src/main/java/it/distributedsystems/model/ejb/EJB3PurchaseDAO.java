@@ -5,6 +5,7 @@ import it.distributedsystems.model.dao.Customer;
 import it.distributedsystems.model.dao.Product;
 import it.distributedsystems.model.dao.Purchase;
 import it.distributedsystems.model.dao.PurchaseDAO;
+import org.hibernate.Hibernate;
 
 import java.util.HashSet;
 import java.util.List;
@@ -91,13 +92,19 @@ import javax.persistence.PersistenceContext;
 
     @Override
     public Purchase findPurchaseByNumber(int purchaseNumber) {
-        return (Purchase) em.createQuery("select p from Purchase p where p.purchaseNumber = :num").
+        Purchase p = (Purchase) em.createQuery("select p from Purchase p where p.purchaseNumber = :num").
                 setParameter("num", purchaseNumber).getSingleResult();
+        Hibernate.initialize(p.getProducts());
+        Hibernate.initialize(p.getCustomer());
+        return p;
     }
 
     @Override
     public Purchase findPurchaseById(int id) {
-        return em.find(Purchase.class, id);
+        Purchase p = em.find(Purchase.class, id);
+        Hibernate.initialize(p.getProducts());
+        Hibernate.initialize(p.getCustomer());
+        return p;
         /*
         return (Purchase) em.createQuery("FROM Purchase p WHERE p.id = :purchaseId").
 			setParameter("purchaseId", id).getSingleResult();

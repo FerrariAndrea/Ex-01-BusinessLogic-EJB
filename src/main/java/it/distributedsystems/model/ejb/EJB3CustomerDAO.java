@@ -3,6 +3,7 @@ package it.distributedsystems.model.ejb;
 //import it.distributedsystems.model.logging.OperationLogger;
 import it.distributedsystems.model.dao.Customer;
 import it.distributedsystems.model.dao.CustomerDAO;
+import org.hibernate.Hibernate;
 
 import javax.ejb.*;
 import javax.interceptor.Interceptors;
@@ -55,8 +56,10 @@ public class EJB3CustomerDAO implements CustomerDAO {
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public Customer findCustomerByName(String name) {
         if(name != null && !name.equals("")) {
-            return (Customer) em.createQuery("FROM Customer c where c.name = :customerName").
+            Customer c = (Customer) em.createQuery("FROM Customer c where c.name = :customerName").
                     setParameter("customerName", name).getSingleResult();
+            Hibernate.initialize(c.getPurchases());
+            return c;
         } else
             return null;
     }
@@ -64,7 +67,9 @@ public class EJB3CustomerDAO implements CustomerDAO {
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public Customer findCustomerById(int id) {
-        return em.find(Customer.class, id);
+        Customer c = em.find(Customer.class, id);
+        Hibernate.initialize(c.getPurchases());
+        return c;
     }
 
     @Override

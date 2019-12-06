@@ -18,18 +18,18 @@
         <validation-mode>CALLBACK</validation-mode>
         <properties>
             <!-- DB information -->
-            <property name="connection.url" value="jdbc:mysql://127.0.0.1:3306/shopping"/>
-            <property name="connection.username" value="root"/>
-            <property name="connection.password" value="sisdist"/>
+            <property name="hibernate.connection.url" value="jdbc:mysql://127.0.0.1:3306/shopping"/>
+            <property name="hibernate.connection.username" value="root"/>
+            <property name="hibernate.connection.password" value="sisdist"/>
 
             <!--    <property name="connection.driver_class" value="com.mysql.jdbc.Driver"/>-->
             <!--    <property name="dialect" value="org.hibernate.dialect.MySQL8DialectDialect"/>-->
 
-            <property name="connection.driver_class" value="com.mysql.cj.jdbc.Driver"/>
-            <property name="dialect" value="org.hibernate.dialect.MySQL57Dialect"/>
+            <property name="hibernate.connection.driver_class" value="com.mysql.cj.jdbc.Driver"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL57Dialect"/>
 
-            <property name="show_sql" value="true"/>
-            <property name="format_sql" value="true"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
             <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
 
             <!-- JDBC connection pool (use the built-in) -->
