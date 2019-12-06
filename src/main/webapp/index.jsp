@@ -20,6 +20,10 @@
 
 				.append("<td>")
 				.append( (product.getProducer() == null) ? "n.d." : product.getProducer().getName() )
+				.append("</td>")
+
+				.append("<td>")
+				.append( product.getId() )
 				.append("</td>");
 
 		html
@@ -89,9 +93,15 @@
 			int id = productDAO.insertProduct(product);
 			System.out.println("productDAO.insertProduct--->" + name);
 			out.println("<!-- inserted product '" +name+ "' with id = '" + id + "' -->");
+		}else  if( operation != null && operation.equals("addToCart") ){	//Da aggiungere la possibilità di fare un ordine in sessione e di finalizzarla per creare un purchase.
+
+
+		}else  if( operation != null && operation.equals("removeFromCart") ){
+
+		}else  if( operation != null && operation.equals("confirm") ){
+
 		}
 
-		//Da aggiungere la possibilità di fare un ordine in sessione e di finalizzarla per creare un purchase.
 	%>
 
 
@@ -161,7 +171,7 @@
 	<div>
 		<p>Products currently in the database:</p>
 		<table>
-			<tr><th>Name</th><th>ProductNumber</th><th>Publisher</th><th></th></tr>
+			<tr><th>Name</th><th>ProductNumber</th><th>Publisher</th><th>ID</th></tr>
 			<%= printTableRows( productDAO.getAllProducts(), request.getContextPath() ) %>
 		</table>
 	</div>
@@ -169,7 +179,17 @@
 	<div>
 		<a href="<%= request.getContextPath() %>">Ricarica lo stato iniziale di questa pagina</a>
 	</div>
-
+	<hr><br>
+	<div>
+		<!--
+		<form>
+			Name: <input type="text" name="name"/><br/>
+			Product Number: <input type="text" name="number"/><br/>
+			<input type="hidden" name="operation" value="insertProduct"/>
+			<input type="submit" name="submit" value="submit"/>
+		</form>
+		-->
+	</div>
 	</body>
 
 </html>

@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-@WebServlet(name = "HibernateServlet", urlPatterns = {"hibernate"}, loadOnStartup = 1) // TODO: demo/hibernate???
+@WebServlet(name = "HibernateServlet", urlPatterns = {"demo/hibernate"}, loadOnStartup = 1) // TODO: demo/hibernate???
 public class HibernateServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
