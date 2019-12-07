@@ -9,13 +9,26 @@ import java.util.List;
 
 
 @Local
-@Stateful
+@Stateful(name = "carrello")
 public class CartBean implements Cart {
 
-    List<Product> myCart = new ArrayList<Product>();
+    private List<Product> myCart = new ArrayList<Product>();
+    private int testingSession = 0;
+    public CartBean(){  myCart = new ArrayList<Product>();}
+/*
+    @Override
+    public void init() {
+        myCart = new ArrayList<Product>();
+    }
+*/
     @Override
     public boolean addToCart(Product p) {
+        testingSession++;
+        System.out.println("--------------->Count of invoke: "+ testingSession);
         try{
+            if(myCart.contains(p)){
+                return false;
+            }
             return   myCart.add(p);
         }catch (Exception e){
             return false;
@@ -35,5 +48,10 @@ public class CartBean implements Cart {
     public boolean confirm() {
             //save on db
         return true;
+    }
+
+    @Override
+    public List<Product> getPorductsInCart() {
+        return myCart;
     }
 }

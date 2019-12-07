@@ -190,7 +190,8 @@ war {
     //from 'tmp/war'
     include "*.cfg.xml"
     include "*.jsp"
-    include "src/webapp/styles/*.css"
+    include "/styles/*.css"
+    include "/js/myjs.js"
 }
 
 
