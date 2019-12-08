@@ -27,10 +27,12 @@ public class CartBean implements Cart {
         System.out.println("--------------->Count of invoke: "+ testingSession);
         try{
             if(myCart.contains(p)){
+                System.out.println("--------------->myCart.contains(p)--<true>");
                 return false;
             }
             return   myCart.add(p);
         }catch (Exception e){
+            System.out.println("WARNING-> addToCart error: "+ e.getMessage());
             return false;
         }
     }
@@ -38,11 +40,25 @@ public class CartBean implements Cart {
     @Override
     public boolean removeFromCart(Product p) {
         try{
-           return myCart.remove(p);
+           //return myCart.remove(p);
+            return internalRemove(p);
         }catch (Exception e){
+            System.out.println("WARNING-> removeFromCart error: "+ e.getMessage());
             return false;
         }
     }
+
+    private boolean internalRemove(Product p){
+        int id=p.getId();
+        for (int x=0;x< myCart.size();x++ ) {
+            if(id==myCart.get(x).getId()){
+                myCart.remove(x);
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     @Override
     public boolean confirm() {

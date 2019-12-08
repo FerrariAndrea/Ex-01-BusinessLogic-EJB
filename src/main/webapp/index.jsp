@@ -95,9 +95,9 @@
 	*/
 	Cart cart;
 	if(session.getAttribute("cart") ==null){
-                InitialContext ic = new InitialContext();
-                cart = (Cart) ic.lookup("java:global/distributed-systems-demo/distributed-systems-demo.war/carrello");
-                session.setAttribute("cart",cart);
+        InitialContext ic = new InitialContext();
+        cart = (Cart) ic.lookup("java:global/distributed-systems-demo/distributed-systems-demo.war/carrello");
+        session.setAttribute("cart",cart);
     }else{
         cart= (Cart)session.getAttribute("cart");
     }
