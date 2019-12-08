@@ -10,4 +10,5 @@ public interface Cart {
     public boolean removeFromCart(Product p);
     public boolean confirm();
     public List<Product> getPorductsInCart();
+    public String getLabel();
 }

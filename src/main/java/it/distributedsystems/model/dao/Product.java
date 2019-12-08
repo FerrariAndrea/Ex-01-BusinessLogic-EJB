@@ -77,4 +77,17 @@ public class Product implements Serializable {
     public void setProducer(Producer producer) {
         this.producer = producer;
     }
+
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Product))
+            return false;
+        if (obj == this)
+            return true;
+        return this.getId()==((Product) obj).getId();
+    }
+
+    public int hashCode(){
+        return  this.getId();//+this.getProductNumber();
+    }
+
 }

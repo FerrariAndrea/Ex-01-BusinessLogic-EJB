@@ -22,7 +22,7 @@ import javax.persistence.PersistenceContext;
 
 
 
-@Stateless
+@Stateless(name="purchaseDAO")
 @Local(PurchaseDAO.class)
 //@Remote(PurchaseDAO.class)  //-> TODO: serve nella versione clustering???
  public class EJB3PurchaseDAO implements PurchaseDAO {
