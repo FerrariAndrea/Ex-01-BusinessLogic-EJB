@@ -93,8 +93,14 @@
 	Cart cart;
 	//TRAMITE LOOKUP
 	*/
-		InitialContext ic = new InitialContext();
-		Cart cart = (Cart) ic.lookup("java:global/distributed-systems-demo/distributed-systems-demo.war/carrello");
+	Cart cart;
+	if(session.getAttribute("cart") ==null){
+                InitialContext ic = new InitialContext();
+                cart = (Cart) ic.lookup("java:global/distributed-systems-demo/distributed-systems-demo.war/carrello");
+                session.setAttribute("cart",cart);
+    }else{
+        cart= (Cart)session.getAttribute("cart");
+    }
 	/*
 	public void init(){
 		try{
