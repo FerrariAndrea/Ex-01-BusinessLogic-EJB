@@ -153,6 +153,7 @@
 		}else  if( operation != null && operation.equals("removeFromCart") ){
 			cart.removeFromCart(productDAO.findProductById(Integer.parseInt(request.getParameter("dellID"))));
 		}else  if( operation != null && operation.equals("confirm") ){
+            cart.setCostumer(customerDAO.findCustomerByName(request.getParameter("clientCustomer")));
             cart.confirm();
         }
 
@@ -237,6 +238,7 @@
 	<hr><br>
 	<div>
 		<form>
+            <label style="color:blue"><%=cart.getLabel()  %></label><br>
 			<label>Seleziona il prodotto:</label>
 			<select onchange="selection(this)" name="productToCart">
 			<%= printSelectorTableRows( allProduct, request.getContextPath() ) %>
@@ -246,13 +248,15 @@
 			<input type="submit" name="submit" value="submit"/>
             </form>
 			<div>
+                <br><br>
 			<label>Carrello corrente</label>
 				<table>
 					<tr><th>Name</th><th>ProductNumber</th><th>Publisher</th><th>Remove</th></tr>
 					<%= printTableRows( cart.getPorductsInCart(), request.getContextPath() ,true) %>
 				</table>
                 <form>
-                    <label>Confirm order</label>
+                    <label>Confirm order</label><br>
+                    <label>Username</label><input type="text" name="clientCustomer" value=""/>
                     <input type="hidden" name="operation" value="confirm"/>
                     <input type="submit" name="submit" value="submit"/>
                 </form>

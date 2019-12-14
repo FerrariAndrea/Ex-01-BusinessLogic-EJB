@@ -1,5 +1,6 @@
 package it.distributedsystems.model.ejb;
 
+import it.distributedsystems.model.dao.Customer;
 import it.distributedsystems.model.dao.Product;
 
 import java.util.List;
@@ -10,5 +11,6 @@ public interface Cart {
     public boolean removeFromCart(Product p);
     public boolean confirm();
     public List<Product> getPorductsInCart();
+    public void setCostumer(Customer c);
     public String getLabel();
 }

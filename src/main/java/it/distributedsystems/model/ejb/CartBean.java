@@ -1,9 +1,6 @@
 package it.distributedsystems.model.ejb;
 
-import it.distributedsystems.model.dao.DAOFactory;
-import it.distributedsystems.model.dao.Product;
-import it.distributedsystems.model.dao.Purchase;
-import it.distributedsystems.model.dao.PurchaseDAO;
+import it.distributedsystems.model.dao.*;
 
 import javax.ejb.EJB;
 import javax.ejb.Local;
@@ -21,6 +18,7 @@ import java.util.stream.Collectors;
 public class CartBean implements Cart {
 
     private List<Product> myCart = new ArrayList<Product>();
+    private Customer myCustomer=null;
     private int testingSession = 0;
     private String label="Your cart is void";
     //@EJB Purchase purchase;
@@ -92,14 +90,17 @@ public class CartBean implements Cart {
         Set<Product> set = myCart.stream().collect(Collectors.toSet());
         Purchase purchase = new Purchase();
         purchase.setProducts(set);
+        purchase.setCustomer(myCustomer);
         try{
             InitialContext ic = new InitialContext();
             //java:global/distributed-systems-demo/distributed-systems-demo.war/purchaseDAO!it.distributedsystems.model.dao.PurchaseDAO
             //java:global/distributed-systems-demo/distributed-systems-demo.war/purchaseDAO
             PurchaseDAO  purchaseDAO = (PurchaseDAO) ic.lookup("java:global/distributed-systems-demo/distributed-systems-demo.war/purchaseDAO");
             purchaseDAO.insertPurchase(purchase);
+            label = "Purchase confirmed.";
         }catch (Exception ex){
             System.out.println("ERROR-> confirm error: "+ ex.getMessage());
+            label = "Purchase failed.";
             return false;
         }
        // purchaseDAO.insertPurchase(purchase);
@@ -110,6 +111,12 @@ public class CartBean implements Cart {
     public List<Product> getPorductsInCart() {
 
         return myCart;
+    }
+
+    @Override
+    public void setCostumer(Customer c) {
+        label = "Customer set to "+ c.getName();
+        myCustomer=c;
     }
 
     @Override
